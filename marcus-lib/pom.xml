@@ -3,14 +3,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.hua.marcus</groupId>
+    <groupId>com.marcus</groupId>
     <artifactId>marcus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.hua.marcus</groupId>
   <artifactId>marcus-lib</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <name>marcus-lib</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
