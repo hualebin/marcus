@@ -18,6 +18,12 @@
 		<artifactId>spring-webmvc</artifactId>
 		<version>${spring.version}</version>
 	</dependency>
+	<!-- 阿里巴巴连接池 -->
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>druid</artifactId>
+		<version>1.0.14</version>
+	</dependency>
   </dependencies>
   <build>
     <finalName>marcus-web-model-springmvc4</finalName>
