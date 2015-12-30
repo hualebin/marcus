@@ -6,7 +6,7 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
-        <property name="context-root" value="marcus-web-model-springmvc4"/>
         <property name="java-output-path" value="/marcus-web-model-springmvc4/target/classes"/>
+        <property name="context-root" value="marcus-web-model-springmvc4"/>
     </wb-module>
 </project-modules>

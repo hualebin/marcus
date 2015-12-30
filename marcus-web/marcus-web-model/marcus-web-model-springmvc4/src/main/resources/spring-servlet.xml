@@ -9,20 +9,20 @@
  ">
      
     <!-- 自动搜索@Controller标注的类 -->  
-    <context:component-scan base-package="com.marcus">
-    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />  
+    <context:component-scan base-package="com.marcus" use-default-filters="false">
+    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>  
     </context:component-scan>
     
     <!-- 激活@RequestMapping annotation -->
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>  
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>  
 	
-	 <!-- 定义跳转的文件的前后缀 ViewResolver  -->
-	 <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+ 	<!-- 定义跳转的文件的前后缀 ViewResolver  -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	 	<property name="prefix" value="/WEB-INF/view/" />
 	 	<property name="suffix" value=".jsp" />
-	 </bean>
-	 <!-- 支持文件上传 -->
-	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	</bean>
+	<!-- 支持文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 	 
 </beans>

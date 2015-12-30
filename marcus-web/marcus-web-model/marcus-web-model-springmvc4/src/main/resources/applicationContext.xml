@@ -13,69 +13,50 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
 ">
-	<!-- 数据源配置  使用tomcat的jndi-->
-	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName"><value>java:comp/env/jdbc/coms</value></property>
-	</bean> -->
-	
-	<!-- 解析文件的路径 -->
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
-		<property name="locations">
+	<!-- 指定扫描注解的包 -->
+    <context:component-scan base-package="com.marcus">
+    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
+    <!-- 定时器配置 -->
+    <bean id="jobDemo" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    	<property name="jobClass" value="com.marcus.util.JobDemo"/>
+    	<property name="jobDataAsMap">
+    		<map>
+    			<entry key="timeout" value="0"/>
+    		</map>
+    	</property>
+    </bean>
+    <!-- 定时器quartz作业触发器1. SimpleTriggerBean，只支持按照一定频度调用任务，如每隔30分钟运行一次。 -->
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDemo"/>
+		<property name="startDelay" value="0"/>  <!-- 调度工厂实例化后，经过0秒开始调度 -->
+		<property name="repeatInterval" value="2000"/> <!-- 每两秒调度一次 -->
+	</bean>
+	<!-- 定时器quartz作业触发器2. CronTriggerBean，支持到指定时间运行一次，如每天12:00运行一次等。 -->
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDemo"/>
+		<property name="cronExpression" value="0 0 12 * * ?"/>  <!-- 每天12:00运行一次 -->
+	</bean>
+	<!-- 配置定时器调度工厂 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
 			<list>
-				<value>classpath:jdbc.properties</value>
+				<ref bean="simpleTrigger"/>
 			</list>
 		</property>
 	</bean>
-	<!-- 阿里巴巴连接池 -->
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
-		<property name="url"><value>${jdbc.url}</value></property>
-		<property name="username"><value>${jdbc.username}</value></property>
-		<property name="password"><value>${jdbc.password}</value></property>
-		<property name="maxActive"><value>${jdbc.maxActive}</value></property>
-		<property name="testOnBorrow"><value>true</value></property>
-		<property name="validationQuery"><value>SELECT '1' FROM DUAL</value></property>
-		<property name="connectionProperties"><value>useUnicode=true;characterEncoding=utf-8</value></property>
-	</bean>
-	
-	<!-- hibernate session factory-->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-  		<property name="configurationClass"  value="org.hibernate.cfg.AnnotationConfiguration"/>
-	    <property name="packagesToScan">
-	    	<list>
-		    	<value>com.cost168.entity.</value>
-	    	</list>
-	    </property>
-		<property name="hibernateProperties">  
-            <props>  
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>  
-                <prop key="hibernate.show_sql">true</prop>  
-                <prop key="hibernate.format_sql">false</prop> 
-                <!-- <prop key="hibernate.default_schema">cgpt</prop>  -->
-                <prop key="hibernate.validator.autoregister_listeners">false</prop>
-                <prop key="hibernate.validator.apply_to_ddl">false</prop>
-                <prop key="javax.persistence.validation.mode">none</prop>
-                <prop key="hibernate.jdbc.fetch_size">50</prop>
-                <prop key="hibernate.jdbc.batch_size">20</prop>
-                <prop key="hibernate.cache.use_second_level_cache">false</prop>
-                <prop key="hibernate.cache.use_query_cache">false</prop>
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
-                <prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache-cachehibernate.xml</prop>
-            </props>  
-        </property>  
-	</bean>
-	<!-- 指定扫描注解的包 -->
-	<context:annotation-config/>
-    <context:component-scan base-package="com.cost168"/>
+
+
 
 	<!-- 配置事务管理,使用annotation定义事务 -->
-    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <!-- <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>	
-    <tx:annotation-driven transaction-manager="txManager" /> 
+    <tx:annotation-driven transaction-manager="txManager" />  -->
    
 	<!-- 事务控制 -->
-	<bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+	<!-- <bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
 	    <property name="transactionManager" ref="dataSourceTransactionManager" />
 	    <property name="transactionAttributes">
 	        <props>
@@ -84,6 +65,6 @@
 	            <prop key="*">readOnly</prop>
 	        </props>
 	    </property>
-	</bean>
+	</bean> -->
 	
 </beans>
