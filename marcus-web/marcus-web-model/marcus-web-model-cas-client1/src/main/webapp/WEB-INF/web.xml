@@ -2,7 +2,7 @@
 <web-app id="WebApp_ID" version="3.0"
  xmlns="http://java.sun.com/xml/ns/javaee"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-	<display-name>Archetype Created Web Application</display-name>	
+	<display-name>cas-client1 Created Web Application</display-name>	
 	<!-- spring 容器配置文件 -->
   	<context-param>
     	<param-name>contextConfigLocation</param-name>
@@ -28,21 +28,12 @@
     	</init-param>
   	</filter>
   	
-  	<!-- spring security配置 -->
-  	<filter>
-  		<filter-name>springSecurityFilter</filter-name>
-  		<filter-class>org.</filter-class>
-  	</filter>
   	
   	<filter-mapping>
     	<filter-name>encodingFilter</filter-name>
     	<url-pattern>/*</url-pattern>
     	<dispatcher>REQUEST</dispatcher>
     	<dispatcher>FORWARD</dispatcher>
-  	</filter-mapping>
-  	
-  	<filter-mapping>
-  	
   	</filter-mapping>
   	
   	<!-- springmvc配置 -->

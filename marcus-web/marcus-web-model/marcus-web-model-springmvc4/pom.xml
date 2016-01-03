@@ -11,6 +11,9 @@
   <packaging>war</packaging>
   <name>marcus-web-model-springmvc4 Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <properties>
+  	<spring.security.version>4.0.3.RELEASE</spring.security.version>
+  </properties>
   <dependencies>
     <!-- spring mvc 支持 -->
     <dependency>
@@ -35,6 +38,17 @@
 		<artifactId>spring-orm</artifactId>
 		<version>${spring.version}</version>
 	</dependency>
+	<!-- spring security -->
+	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-config</artifactId>
+    	<version>${spring.security.version}</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-taglibs</artifactId>
+    	<version>${spring.security.version}</version>
+	</dependency>
 	<!-- 阿里巴巴连接池 -->
 	<dependency>
 		<groupId>com.alibaba</groupId>
@@ -51,6 +65,12 @@
 		<groupId>commons-io</groupId>
 		<artifactId>commons-io</artifactId>
 		<version>2.4</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi</artifactId>
+		<version>3.13</version>
 	</dependency>
 	
   </dependencies>
