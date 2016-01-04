@@ -5,20 +5,77 @@
  xmlns:tx="http://www.springframework.org/schema/tx"
  xmlns:context="http://www.springframework.org/schema/context"
  xsi:schemaLocation="http://www.springframework.org/schema/beans 
-		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/tx 
-		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
 		http://www.springframework.org/schema/aop 
-		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd
 ">
 	<!-- 指定扫描注解的包 -->
     <context:component-scan base-package="com.marcus">
     	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     
-    <!-- 定时器配置 -->
+    <!-- 加载jdbc/hibernate配置信息 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
+		<property name="locations">
+			<list>
+				<value>classpath:hibernate.properites</value>
+			</list>
+		</property>
+	</bean>
+    <!-- 阿里巴巴连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    	<!-- 基本属性 url、user、password -->
+		<property name="url"><value>${jdbc.url}</value></property>
+		<property name="username"><value>${jdbc.username}</value></property>
+		<property name="password"><value>${jdbc.password}</value></property>
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize"><value>${jdbc.initialSize}</value></property>
+      	<property name="minIdle"><value>${jdbc.minIdle}</value></property> 
+      	<property name="maxActive"><value>${jdbc.maxActive}</value></property>
+      	<!-- 配置获取连接等待超时的时间 -->
+      	<property name="maxWait"><value>${jdbc.maxWait}</value></property>
+      	<!-- 检测连接 -->
+      	<property name="validationQuery"><value>${jdbc.validationQuery}</value></property>
+		<property name="testOnBorrow"><value>${jdbc.testOnBorrow}</value></property>
+	</bean>
+	
+	<!-- hibernate5 session factory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="packagesToScan">
+			<!-- 可配置多个 -->
+			<list>
+				<value>com.marcus.entity</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.validator.autoregister_listeners">${hibernate.validator.autoregister_listeners}</prop>
+                <prop key="hibernate.validator.apply_to_ddl">${hibernate.validator.apply_to_ddl}</prop>
+                <prop key="javax.persistence.validation.mode">${javax.persistence.validation.mode}</prop>
+                <prop key="hibernate.jdbc.fetch_size">${hibernate.jdbc.fetch_size}</prop>
+                <prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+			</props>
+		</property>
+	</bean>
+    
+
+	<!-- 配置事务管理,使用annotation定义事务 -->
+    <bean id="txManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+    <tx:annotation-driven transaction-manager="txManager" /> 
+ 
+	
+	<!-- 定时器配置 -->
     <bean id="jobDemo" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
     	<property name="jobClass" value="com.marcus.util.quartz.JobDemo"/>
     	<property name="jobDataAsMap">
@@ -53,25 +110,5 @@
 			</list>
 		</property>
 	</bean>
-
-
-
-	<!-- 配置事务管理,使用annotation定义事务 -->
-    <!-- <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>	
-    <tx:annotation-driven transaction-manager="txManager" />  -->
-   
-	<!-- 事务控制 -->
-	<!-- <bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
-	    <property name="transactionManager" ref="dataSourceTransactionManager" />
-	    <property name="transactionAttributes">
-	        <props>
-	            <prop key="terParamsFileLeadingIn">PROPAGATION_REQUIRED</prop>
-	            <prop key="batchSave">PROPAGATION_REQUIRED</prop>
-	            <prop key="*">readOnly</prop>
-	        </props>
-	    </property>
-	</bean> -->
 	
 </beans>
