@@ -1,4 +1,4 @@
-package com.marcus.util;
+package com.marcus.util.quartz;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -25,7 +25,7 @@ public class JobDemo extends QuartzJobBean{
 	@Override
 	protected void executeInternal(JobExecutionContext arg0) throws JobExecutionException {
 		// TODO Auto-generated method stub
-		System.out.println("定时任务执行中........");
+		System.out.println("定时任务执行中........" + timeout);
 	}
 
 }

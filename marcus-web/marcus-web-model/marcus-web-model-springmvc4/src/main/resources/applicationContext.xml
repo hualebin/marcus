@@ -20,29 +20,36 @@
     
     <!-- 定时器配置 -->
     <bean id="jobDemo" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-    	<property name="jobClass" value="com.marcus.util.JobDemo"/>
+    	<property name="jobClass" value="com.marcus.util.quartz.JobDemo"/>
     	<property name="jobDataAsMap">
     		<map>
-    			<entry key="timeout" value="0"/>
+    			<entry key="timeout" value="12"/>
     		</map>
     	</property>
     </bean>
+    <bean id="jobDemo2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    	<property name="targetObject">
+    		<bean class="com.marcus.util.quartz.JobDemo2"/>
+    	</property>
+    	<property name="targetMethod" value="doJob"/>
+    	<property name="concurrent" value="false"/> <!-- 作业不并发调度 -->
+    </bean>
     <!-- 定时器quartz作业触发器1. SimpleTriggerBean，只支持按照一定频度调用任务，如每隔30分钟运行一次。 -->
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-		<property name="jobDetail" ref="jobDemo"/>
+		<property name="jobDetail" ref="jobDemo2"/>
 		<property name="startDelay" value="0"/>  <!-- 调度工厂实例化后，经过0秒开始调度 -->
 		<property name="repeatInterval" value="2000"/> <!-- 每两秒调度一次 -->
 	</bean>
 	<!-- 定时器quartz作业触发器2. CronTriggerBean，支持到指定时间运行一次，如每天12:00运行一次等。 -->
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="jobDemo"/>
+		<property name="jobDetail" ref="jobDemo2"/>
 		<property name="cronExpression" value="0 0 12 * * ?"/>  <!-- 每天12:00运行一次 -->
 	</bean>
 	<!-- 配置定时器调度工厂 -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="simpleTrigger"/>
+				<ref bean="cronTrigger" />
 			</list>
 		</property>
 	</bean>
