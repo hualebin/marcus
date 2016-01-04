@@ -22,5 +22,8 @@
 	</dependencies>
   <modules>
     <module>marcus-web-model-springmvc4</module>
+    <module>marcus-web-model-cas-client1</module>
+    <module>marcus-web-model-cas-client2</module>
+    <module>marcus-web-model-servlet3</module>
   </modules>
 </project>

@@ -13,6 +13,7 @@
   <url>http://maven.apache.org</url>
   <properties>
   	<quartz.version>2.2.2</quartz.version>
+  	<spring.security.version>4.0.3.RELEASE</spring.security.version>
   </properties>
   <dependencies>
     <!-- spring mvc 支持 -->
@@ -37,6 +38,17 @@
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-orm</artifactId>
 		<version>${spring.version}</version>
+	</dependency>
+	<!-- spring security -->
+	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-config</artifactId>
+    	<version>${spring.security.version}</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-taglibs</artifactId>
+    	<version>${spring.security.version}</version>
 	</dependency>
 	<!-- 阿里巴巴连接池 -->
 	<dependency>

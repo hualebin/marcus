@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.marcus</groupId>
+    <artifactId>marcus-web-model</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>marcus-web-model-cas-client2</artifactId>
+  <packaging>war</packaging>
+  <name>marcus-web-model-cas-client2 Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+  	<!-- 单点 登录cas-client支持 -->
+    <dependency>
+		<groupId>org.jasig.cas.client</groupId>
+		<artifactId>cas-client-core</artifactId>
+		<version>3.4.1</version>
+	</dependency>
+	<!-- spring mvc 支持 -->
+    <dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+  </dependencies>
+  <build>
+    <finalName>marcus-web-model-cas-client2</finalName>
+  </build>
+</project>
