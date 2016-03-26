@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.marcus</groupId>
+    <artifactId>marcus-web-model</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.marcus.activeMQ</groupId>
+  <artifactId>marcus-web-model-activeMQ</artifactId>
+  <packaging>war</packaging>
+  <name>marcus-web-model-activeMQ Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+  	<activeMQ.version>5.13.2</activeMQ.version>
+  </properties>
+  <dependencies>
+  	<!-- ActiveMq 支持 -->
+    <dependency>
+		<groupId>org.apache.activemq</groupId>
+		<artifactId>activemq-broker</artifactId>
+		<version>${activeMQ.version}</version>
+	</dependency>
+  </dependencies>
+  <build>
+    <finalName>marcus-web-model-activeMQ</finalName>
+  </build>
+</project>

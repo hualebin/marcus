@@ -15,5 +15,10 @@
   </properties>
   <modules>
     <module>marcus-lib-model-pdf</module>
+    <module>marcus-lib-model-socket</module>
+    <module>marcus-lib-model-jxpath</module>
+    <module>marcus-lib-string</module>
+    <module>marcus-lib-collection</module>
+    <module>marcus-lib-algorithm</module>
   </modules>
 </project>
