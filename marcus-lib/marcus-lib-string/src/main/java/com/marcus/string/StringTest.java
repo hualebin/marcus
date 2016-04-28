@@ -41,7 +41,6 @@ public class StringTest {
 		System.out.println(str3 == str4);//false
 		System.out.println(str4 == str3.intern());//true
 		
-		
 	}
 
 }
