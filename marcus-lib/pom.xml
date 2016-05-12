@@ -21,5 +21,6 @@
     <module>marcus-lib-collection</module>
     <module>marcus-lib-algorithm</module>
     <module>marcus-lib-jredis</module>
+    <module>marcus-lib-model-netty</module>
   </modules>
 </project>
