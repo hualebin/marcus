@@ -12,6 +12,6 @@ public class QueueTest {
 		queue.add("test"); //增加一个元素，位于队列的最后面
 		queue.add("success");
 		queue.remove();//队列头部元素被移除掉
-	}
+	} 
 
 }
