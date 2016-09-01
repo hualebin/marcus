@@ -24,5 +24,6 @@
     <module>marcus-lib-model-netty</module>
     <module>marcus-lib-coding</module>
     <module>marcus-lib-designPattern</module>
+    <module>marcus-lib-elasticsearch</module>
   </modules>
 </project>
