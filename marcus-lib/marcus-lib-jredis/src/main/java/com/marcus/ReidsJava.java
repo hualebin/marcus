@@ -7,7 +7,7 @@ import redis.clients.jedis.Jedis;
 public class ReidsJava {
 	public static void main(String[] args) {
 		Jedis jedis = new Jedis("120.24.166.171", 6379);
-		jedis.auth("marcus");
+		//jedis.auth("marcus");
 		System.out.println("Connection to server successfully");
 		System.out.println("Server is running:" + jedis.ping());
 		System.out.println(jedis.get("name"));
