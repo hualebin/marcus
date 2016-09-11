@@ -25,7 +25,7 @@
     <module>marcus-web-model-cas-client1</module>
     <module>marcus-web-model-cas-client2</module>
     <module>marcus-web-model-servlet3</module>
-    <module>activeMQ</module>
     <module>marcus-web-model-activeMQ</module>
+    <module>marcus-web-model-jersey</module>
   </modules>
 </project>

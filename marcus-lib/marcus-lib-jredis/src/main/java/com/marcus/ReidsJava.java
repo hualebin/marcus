@@ -6,12 +6,14 @@ import redis.clients.jedis.Jedis;
 
 public class ReidsJava {
 	public static void main(String[] args) {
-		Jedis jedis = new Jedis("120.24.166.171");
+		Jedis jedis = new Jedis("120.24.166.171", 6379);
 		jedis.auth("marcus");
 		System.out.println("Connection to server successfully");
 		System.out.println("Server is running:" + jedis.ping());
+		System.out.println(jedis.get("name"));
 		
-		//设置redis字符串数据
+		
+		/*//设置redis字符串数据
 		jedis.set("name", "marcus");
 		
 		//获取数据
@@ -26,6 +28,6 @@ public class ReidsJava {
 		List<String> list = jedis.lrange("test-list", 0, 5);
 		for(String str : list){
 			System.out.println("Stroed string in redis ::" + str);
-		}
+		}*/
 	}
 }
