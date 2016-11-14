@@ -5,12 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EventStorage {
+	
 	private int maxSize;
 	private List<Date> storage;
 	
 	public EventStorage() {
 		maxSize = 10;
-		storage = new LinkedList<Date>();
+		storage = new LinkedList<>();
 	}
 	
 	public synchronized void set() {
@@ -22,7 +23,7 @@ public class EventStorage {
 			}
 		}
 		storage.add(new Date());
-		System.out.printf("Set: %d \n", storage.size());
+		System.out.println("Set: "+ storage.size());
 		notifyAll();
 	}
 	
@@ -34,8 +35,8 @@ public class EventStorage {
 				e.printStackTrace();
 			}
 		}
-		
-		System.out.printf("GET: %d: %s \n", storage.size(), ((LinkedList<?>) storage).poll());
+		System.out.println("Get: " + storage.size() + ((LinkedList<?>)storage).poll());
 		notifyAll();
 	}
+
 }
