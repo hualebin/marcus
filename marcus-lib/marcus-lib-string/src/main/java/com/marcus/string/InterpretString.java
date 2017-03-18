@@ -81,11 +81,11 @@ public class InterpretString {
         //↑str为静态变量，编译期会被优化 
         //↑------------------------------------------------------over  
 		
-		Integer i1 = 5;
-		Integer i2 = 5;
+		Integer i1 = 127;
+		Integer i2 = 127;
 		System.out.println(i1 == i2);
 		Double d1 = 2.53;
-		Double d2 = 2.35;
+		Double d2 = 2.53;
 		System.out.println(d1 == d2);
 		
 	}

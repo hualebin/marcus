@@ -19,7 +19,7 @@ public class Person {
 	private boolean sex;
 	private Double money;
 	private int age;
-	
+	  
 	public Person(){
 		
 	}

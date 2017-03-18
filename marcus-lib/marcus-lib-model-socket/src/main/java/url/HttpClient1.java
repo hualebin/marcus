@@ -8,7 +8,6 @@ import java.net.URL;
 public class HttpClient1 {
 
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
 		URL url = new URL("http://www.baidu.com");
 		
 		InputStream is = url.openStream();
