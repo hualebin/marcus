@@ -1,4 +1,4 @@
-package observerPattern;
+package com.marcus.designPattern.observerPattern;
 
 import java.util.Observable;
 import java.util.Observer;

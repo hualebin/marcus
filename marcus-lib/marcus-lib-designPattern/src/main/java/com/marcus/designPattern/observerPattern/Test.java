@@ -1,4 +1,4 @@
-package observerPattern;
+package com.marcus.designPattern.observerPattern;
 
 public class Test {
 	
