@@ -9,6 +9,7 @@
   </parent>
   <groupId>com.marcus.elasticsearch</groupId>
   <artifactId>marcus-lib-elasticsearch</artifactId>
+  <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>marcus-lib-elasticsearch</name>
   <url>http://maven.apache.org</url>
