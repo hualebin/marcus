@@ -13,7 +13,7 @@ public class ReidsJava {
 		System.out.println(jedis.get("name"));
 		
 		
-		/*//设置redis字符串数据
+		//设置redis字符串数据
 		jedis.set("name", "marcus");
 		
 		//获取数据
@@ -28,6 +28,6 @@ public class ReidsJava {
 		List<String> list = jedis.lrange("test-list", 0, 5);
 		for(String str : list){
 			System.out.println("Stroed string in redis ::" + str);
-		}*/
+		}
 	}
 }
