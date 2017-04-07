@@ -13,5 +13,5 @@ public class QueueTest {
 		queue.add("success");
 		queue.remove();//队列头部元素被移除掉
 	} 
-
+ 
 }

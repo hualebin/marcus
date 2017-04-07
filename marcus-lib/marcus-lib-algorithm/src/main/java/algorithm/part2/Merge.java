@@ -1,47 +1,49 @@
 package algorithm.part2;
 
-public class Merge extends Example{
+public class Merge {
+	private static Comparable aux[];
 	
-	private Comparable[] aux;
-
-	@Override
-	public void sort(Comparable[] a) {
-		// TODO Auto-generated method stub
+	public static void sort(Comparable[] a) {
 		aux = new Comparable[a.length];
-		sort(a, 0, a.length-1);
+		sort(a, 0, a.length - 1);
 	}
 	
-	private void sort(Comparable[] a, int lo, int hi){
-		if(hi <= lo){
+	public static void sort(Comparable[] a, int lo, int hi){
+		if (hi <= lo) {
 			return;
 		}
-		int mid = lo + (hi - lo)/2;
+		int mid = (lo + hi) / 2;
 		sort(a, lo, mid);
-		sort(a, mid+1, hi);
-		merge(a, lo, mid, hi);
+		sort(a, mid + 1, hi);
+		merage(a, lo, mid, hi);
 	}
 	
-	private void merge(Comparable[] a, int lo, int mid, int hi){
+	public static void merage(Comparable[] a, int lo, int mid, int hi) {
 		int i = lo;
 		int j = mid + 1;
-		for(int k = lo; k <= hi; k++){
+		for (int k = i; k <= hi; k++) {
 			aux[k] = a[k];
 		}
-		for(int k = lo; k <= hi; k++){
-			if(i > mid){
+		
+		for (int k = i; k <= hi; k++) {
+			if (i > mid) {
 				a[k] = aux[j++];
-			}else if(j > hi){
+			} else if (j > hi) {
 				a[k] = aux[i++];
-			}else if(less(a[i],a[j])){
-				a[k] = aux[i++];
-			}else{
+			} else if (a[i].compareTo(a[j]) > 0) {
 				a[k] = aux[j++];
+			} else {
+				a[k] = aux[i++];
 			}
-		}
+		}		
+		
 	}
 	
 	public static void main(String[] args) {
-		
+		int lo = 3;
+		int hi = 8;
+		System.out.println((lo + hi) / 2);
+		System.out.println(lo + (hi -lo) / 2);
 	}
 
 }

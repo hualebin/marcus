@@ -29,5 +29,6 @@
     <module>marcus-lib-designPattern</module>
     <module>marcus-lib-elasticsearch</module>
     <module>marcus-lib-activiti</module>
+    <module>marcus-lib-lucene</module>
   </modules>
 </project>

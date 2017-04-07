@@ -1,4 +1,4 @@
-package com.marcus.designPattern.factoryMethodPattern.SimpleFactory;
+ package com.marcus.designPattern.factoryMethodPattern.SimpleFactory;
 
 public class BMW320 extends BMW{
 
@@ -8,3 +8,4 @@ public class BMW320 extends BMW{
 	}
 
 }
+ 
