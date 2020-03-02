@@ -1,3 +1,11 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.DS_Store
+
+### Eclipse ###
 *.class
 /target/
 /.settings/
@@ -6,3 +14,7 @@
 *.mymetadata
 /.metadata/
 /.externalToolBuilders/
+/bin/
+
+### module ###
+**/target/
