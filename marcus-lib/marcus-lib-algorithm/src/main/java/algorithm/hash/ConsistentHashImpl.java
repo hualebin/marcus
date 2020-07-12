@@ -1,17 +1,22 @@
 package algorithm.hash;
 
 import cn.hutool.core.util.HashUtil;
-import cn.hutool.core.util.StrUtil;
 
 import java.util.*;
 
-public class ConsistentHashImpl<T>  implements ConsistentHash {
+public class ConsistentHashImpl<T>  implements ConsistentHash<T> {
 
     private NavigableMap<Integer, T> circle = new TreeMap<>();
 
     private Integer numberOfReplicas;
 
     private HashFunction hashFunction;
+
+    public ConsistentHashImpl(Integer numberOfReplicas) {
+
+        this(null, numberOfReplicas, null);
+
+    }
 
     public ConsistentHashImpl(Collection<T> nodes, Integer numberOfReplicas) {
 
@@ -22,12 +27,13 @@ public class ConsistentHashImpl<T>  implements ConsistentHash {
         this.numberOfReplicas = numberOfReplicas > 1 ? numberOfReplicas :  1;
         if (nodes != null) {
             for (T node: nodes) {
-                addNode(node, numberOfReplicas);
+                addNode(node);
             }
         }
 
         if (hashFunction == null) {
             this.hashFunction = new HashFunction() {
+                @Override
                 public Integer hash(Object key) {
                     return HashUtil.fnvHash(key.toString());
                 }
@@ -36,56 +42,45 @@ public class ConsistentHashImpl<T>  implements ConsistentHash {
     }
 
     @Override
-    public void addNode(Object node) {
+    public void addNode(T node) {
         if (node == null) {
             return;
         }
-    }
-
-    @Override
-    public void addNode(T node, int virtualNodeNum) {
-        if (serverNode == null || StrUtil.isBlank(serverNode.getKey())) {
-            return;
-        }
-        int num = virtualNodeNum > 1 ? virtualNodeNum : 1;
-        for (int i = 1; i <= num; i++) {
-            VirtualNode virtualNode = new VirtualNode(serverNode, num);
-            virtualNodesMap.put(hashFunction.hash(virtualNode.getKey()), virtualNode);
+        for (int i = 1; i <= numberOfReplicas; i++) {
+            this.circle.put(hashFunction.hash(node.toString() + i), node);
         }
     }
 
     @Override
-    public Boolean removeNode(ServerNode serverNode) {
-        if (serverNode == null || StrUtil.isBlank(serverNode.getKey())) {
-            return true;
-        }
-        Iterator<Long> it = virtualNodesMap.keySet().iterator();
-        while (it.hasNext()) {
-            Long key = it.next();
-            VirtualNode virtualNode = virtualNodesMap.get(key);
-            if (serverNode.getKey().equals(virtualNode.getServerNode().getKey())) {
-                it.remove();
+    public Boolean removeNode(T node) {
+        if (node != null) {
+            for (int i = 1; i <= numberOfReplicas; i++) {
+                this.circle.remove(hashFunction.hash(node.toString() + i));
             }
         }
         return true;
     }
 
     @Override
-    public T getDistribution(String key) {
-        if (StrUtil.isBlank(key)) {
+    public T getDistribution(Object key) {
+        if (key == null) {
             throw new NullPointerException("key can not be null.");
         }
 
-        if (virtualNodesMap.isEmpty()) {
+        if (this.circle.isEmpty()) {
             return null;
         }
 
-        Long hash = hashFunction.hash(key);
+        Integer hash = hashFunction.hash(key);
 
-        SortedMap<Long,VirtualNode<T>> tailMap = virtualNodesMap.tailMap(hash);
+        SortedMap<Integer, T> tailMap = this.circle.tailMap(hash);
 
-        Long matchVirtualNodeHash = tailMap.isEmpty() ? virtualNodesMap.firstKey() : tailMap.firstKey();
+        Integer matchNodeHash = tailMap.isEmpty() ? this.circle.firstKey() : tailMap.firstKey();
 
-        return virtualNodesMap.get(matchVirtualNodeHash).getServerNode();
+        return this.circle.get(matchNodeHash);
+    }
+
+    public NavigableMap<Integer, T> getCircle() {
+        return this.circle;
     }
 }

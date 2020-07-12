@@ -12,8 +12,8 @@ public class ActivitiTest01 {
     @Test
     public void testCreatTable() {
         ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
-        processEngineConfiguration.setJdbcDriver("com.mysql.jdbc.Driver")
-                                   .setJdbcUrl("jdbc:mysql://114.215.47.235/activiti")
+        processEngineConfiguration.setJdbcDriver("com.mybatis.jdbc.Driver")
+                                   .setJdbcUrl("jdbc:mybatis://114.215.47.235/activiti")
                                    .setJdbcUsername("chuangshi")
                                    .setJdbcPassword("Chuangshi123!");
         //配置模式true 自动创建和更新表
