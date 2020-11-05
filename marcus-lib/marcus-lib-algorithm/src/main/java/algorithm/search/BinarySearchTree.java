@@ -1,5 +1,10 @@
 package algorithm.search;
 
+/**
+ * 二叉查找树
+ *
+ * 特性：二叉查找树上的任意一个节点，满足其左子树的所有节点存储的值小于这个节点存储的值，其右子树的所有节点存储的值大于这个节点存储的值
+ */
 public class BinarySearchTree {
 
     private Node tree;
@@ -8,186 +13,166 @@ public class BinarySearchTree {
         this.tree = new Node(data);
     }
 
+
     public Node setLeft(Node node, int data) {
         node.left = new Node(data);
         return node.left;
     }
-
     public Node setRight(Node node, int data) {
         node.right = new Node(data);
         return node.right;
     }
 
     /**
-     * 查找
+     * 查找节点
      *
      * @param data
      * @return
      */
     public Node find(int data) {
-        Node p = tree;
-        while(p != null) {
-            if (p.data > data) {
-                p = p.left;
-            } else if (p.data < data) {
-                p = p.right;
+        Node node = this.tree;
+        while (node != null) {
+            if (node.data > data) {
+                node = node.left;
+            } else if (node.data < data) {
+                node = node.right;
             } else {
-                return p;
+                return node;
             }
         }
         return null;
     }
 
     /**
-     * 插入
-     *
+     * 插入节点
      * @param data
      */
     public void insert(int data) {
-        if (tree == null) {
-            tree = new Node(data);
+        if (this.tree == null) {
+            this.tree = new Node(data);
+            return;
         }
-        Node p = tree;
-        while (p != null) {
-            if (p.data > data) {
-                if (p.left == null) {
-                    p.left = new Node(data);
-                    return;
-                }
-                p = p.left;
-            } else if (p.data < data) {
-                if (p.right == null) {
-                    p.right = new Node(data);
-                    return;
-                }
-                p = p.right;
-            }
-        }
-    }
 
-    /**
-     * 删除
-     *
-     * @param data
-     */
-    public void delete(int data) {
-        Node parentNode = null;
-        Node node = tree;
-        while (node != null && node.data != data) {
-            parentNode = node;
+        Node node = this.tree;
+        while (node != null) {
             if (node.data > data) {
+                if (node.left == null) {
+                    node.left = new Node(data);
+                    return;
+                }
                 node = node.left;
-            } else if (node.data < data) {
+            } else {
+                if (node.right == null) {
+                    node.right = new Node(data);
+                    return;
+                }
                 node = node.right;
             }
         }
+    }
 
-        // 找不到节点
-        if (node == null) {
-            return;
-        }
-        // 要删除的节点有左右两个子节点
-        if (node.left != null && node.right != null) {
-            Node parent = null;
-            Node child = node.right;
-            // 查找右子树的最小节点
-            while (child != null && child.left != null) {
-                parent = child;
-                child = child.left;
+    /**
+     * 删除节点
+     * 1、删除的节点没有子节点，直接删除节点
+     * 2、删除的节点只有一个子节点，将子节点替换该节点
+     * 3、删除的节点有两个节点，需要用其中序前驱节点或后继节点来替换，再删除该节点
+     */
+    public void delete(int data) {
+        Node node = this.tree;
+        Node parentNode = null;
+        while(node != null) {
+            if (node.data > data) {
+                parentNode = node;
+                node = node.left;
+            } else if (node.data < data) {
+                parentNode = node;
+                node = node.right;
+            } else {
+                Node replaceNode = null;
+                if (node.left != null && node.right != null) {
+                    // 找中序后继节点即右子树最小节点来替换
+                    Node minNode = node.right;
+                    Node minParentNode = node;
+                    while (minNode.left != null) {
+                        minParentNode = minNode;
+                        minNode = minNode.left;
+                    }
+                    if (minParentNode != node) {
+                        minParentNode.left = null;
+                        minNode.left = node.left;
+                        minNode.right = node.right;
+                    }
+                    replaceNode = minNode;
+                } else if (node.left != null || node.right != null) {
+                    replaceNode = node.left != null ? node.left : node.right;
+                }
+
+                if (parentNode == null) {
+                    tree = replaceNode;
+                } else {
+                    parentNode.left = parentNode.left == node ? replaceNode :  parentNode.left;
+                    parentNode.right = parentNode.right == node ? replaceNode :  parentNode.right;
+                }
+
+                return;
             }
-            if (parent != null) {
-                parent.left = null;
-            }
-            child.left = node.left;
-            child.right = node.right;
-            node.left = null;
-            node.right = child;
         }
 
-        // 要删除的节点只有一个子节点或者没有子节点
-        Node child;
-        if (node.left != null) {
-            child = node.left;
-        } else if (node.right != null) {
-            child = node.right;
-        } else {
-            child = null;
-        }
 
-        // 删除节点
-        if (parentNode == null) { // 判断节点是否是根节点
-            tree = child;
-        } else if (parentNode.left == node) {
-            parentNode.left = child;
-        } else {
-            parentNode.right = child;
-        }
+
     }
 
     /**
-     * 前序遍历打印
+     * 前序遍历
      * 递归遍历
-     * 对于树的任意节点，先打印这个结点，再打印这个节点的左子树节点，最后打印这个节点的右子树节点
+     * 对于树的任意节点，先打印这个节点，再打印这个节点的左子树节点，最后打印这个节点的右子树节点
+     * @param node
      */
-    private static void frontPrint(Node node) {
+    public static void frontPrint(Node node) {
         if (node == null) {
             return;
         }
-        System.out.print(node.data + "  ");
-        if (node.left != null) {
-            frontPrint(node.left);
-        }
-        if (node.right != null) {
-            frontPrint(node.right);
-        }
+        System.out.println(node.getData());
+        frontPrint(node.left);
+        frontPrint(node.right);
     }
 
     /**
-     * 中序遍历打印
+     * 中序遍历
      * 递归遍历
-     * 对于树的任意节点，先打印这个结点的左子树节点，再打印这个节点，最后打印这个节点的右子树节点
+     * 对于树的任意节点，先打印这个节点的左子树节点，再打印这个节点，最后打印这个节点的右子树节点
+     * @param node
      */
-    private static void middlePrint(Node node) {
+    public static void middlePrint(Node node) {
         if (node == null) {
             return;
         }
-        if (node.left != null) {
-            middlePrint(node.left);
-        }
-        System.out.print(node.data + "  ");
-        if (node.right != null) {
-            middlePrint(node.right);
-        }
+        middlePrint(node.left);
+        System.out.println(node.getData());
+        middlePrint(node.right);
     }
 
     /**
-     * 后序遍历打印
+     * 后序遍历
      * 递归遍历
-     * 对于树的任意节点，先打印这个结点的左子树节点，再打印这个节点的右子树节点，最后打印这个节点
+     * 对于树的任意节点，先打印这个节点的左子树节点，再打印这个节点的右子树节点，最后打印这个节点
+     * @param node
      */
-    private static void backendPrint(Node node) {
+    public static void backendPrint(Node node) {
         if (node == null) {
-            return;
-        }
-        if (node.right != null) {
-            backendPrint(node.right);
-        }
-        if (node.left != null) {
             backendPrint(node.left);
+            backendPrint(node.right);
+            System.out.println(node.getData());
         }
-        System.out.print(node.data + "  ");
     }
 
     public class Node {
+
         private int data;
 
         private Node left;
 
         private Node right;
-
-        public Node() {
-
-        }
 
         public Node(int data) {
             this.data = data;
