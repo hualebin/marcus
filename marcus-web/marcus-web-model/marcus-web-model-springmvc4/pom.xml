@@ -12,7 +12,7 @@
   <name>marcus-web-model-springmvc4 Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
-  	<quartz.version>2.2.2</quartz.version>
+  	<quartz.version>2.3.2</quartz.version>
   	<spring.security.version>4.0.3.RELEASE</spring.security.version>
   	<hibernate.version>5.0.6.Final</hibernate.version>
   	<alibaba.version>1.0.16</alibaba.version>
