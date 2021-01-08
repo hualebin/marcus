@@ -1,5 +1,7 @@
 package algorithm.array;
 
+import java.util.ArrayList;
+
 /**
  * Array
  *
@@ -12,6 +14,5 @@ public class Array {
 		for (Integer i : arr) {
 			System.out.println(i.hashCode());
 		}
-
 	}
 }
