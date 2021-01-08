@@ -62,4 +62,8 @@ public class UnorientedGraph {
         }
         System.out.print(t + " ");
     }
+
+    public void dfs(int s, int t) {
+
+    }
 }
