@@ -1,36 +1,51 @@
 package org.marcus.lib.all.test;
 
+/**
+ * 并发测试结果
+ */
 public class ConcurrencyTestResult {
 
     /**
      * 平均响应时间（毫秒）
      */
-    private Long averageResponseTime;
+    private long averageResponseTime;
 
     /**
      * 95%响应时间（毫秒）
      */
-    private Long ninetyFivePercentageResponseTime;
+    private long ninetyFivePercentageResponseTime;
 
     /**
      * 最小响应时间（毫秒）
      */
-    private Long minPercentageResponseTime;
+    private long minPercentageResponseTime;
 
     /**
      * 最大响应时间（毫秒）
      */
-    private Long maxPercentageResponseTime;
+    private long maxPercentageResponseTime;
+
+    /**
+     * 请求成功次数
+     */
+    private int requestSucceedNum;
+
+    /**
+     * 请求失败次数
+     */
+    private int requestFailedNum;
 
     public ConcurrencyTestResult() {
 
     }
 
-    public ConcurrencyTestResult(Long averageResponseTime, Long ninetyFivePercentageResponseTime, Long minPercentageResponseTime, Long maxPercentageResponseTime) {
+    public ConcurrencyTestResult(long averageResponseTime, long ninetyFivePercentageResponseTime, long minPercentageResponseTime, long maxPercentageResponseTime, int requestSucceedNum, int requestFailedNum) {
         this.averageResponseTime = averageResponseTime;
         this.ninetyFivePercentageResponseTime = ninetyFivePercentageResponseTime;
         this.minPercentageResponseTime = minPercentageResponseTime;
         this.maxPercentageResponseTime = maxPercentageResponseTime;
+        this.requestSucceedNum = requestSucceedNum;
+        this.requestFailedNum = requestFailedNum;
     }
 
     public long getAverageResponseTime() {
@@ -65,18 +80,28 @@ public class ConcurrencyTestResult {
         this.maxPercentageResponseTime = maxPercentageResponseTime;
     }
 
+    public int getRequestSucceedNum() {
+        return requestSucceedNum;
+    }
+
+    public void setRequestSucceedNum(int requestSucceedNum) {
+        this.requestSucceedNum = requestSucceedNum;
+    }
+
+    public int getRequestFailedNum() {
+        return requestFailedNum;
+    }
+
+    public void setRequestFailedNum(int requestFailedNum) {
+        this.requestFailedNum = requestFailedNum;
+    }
+
     public void print() {
-        if (averageResponseTime != null) {
-            System.out.printf("平均响应时间： %s(ms)\n", averageResponseTime);
-        }
-        if (ninetyFivePercentageResponseTime != null) {
-            System.out.printf("95%响应时间： %s(ms)\n", ninetyFivePercentageResponseTime);
-        }
-        if (minPercentageResponseTime != null) {
-            System.out.printf("最小响应时间： %s(ms)\n", minPercentageResponseTime);
-        }
-        if (maxPercentageResponseTime != null) {
-            System.out.printf("最大响应时间： %s(ms)\n", maxPercentageResponseTime);
-        }
+        System.out.printf("平均响应时间： %s(ms)\n", averageResponseTime);
+        System.out.printf("百分之95响应时间： %s(ms)\n", ninetyFivePercentageResponseTime);
+        System.out.printf("最小响应时间： %s(ms)\n", minPercentageResponseTime);
+        System.out.printf("最大响应时间： %s(ms)\n", maxPercentageResponseTime);
+        System.out.printf("请求成功次数： %s次\n", requestSucceedNum);
+        System.out.printf("请求失败次数： %s次\n", requestFailedNum);
     }
 }
